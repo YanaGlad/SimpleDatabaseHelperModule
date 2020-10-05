@@ -1,5 +1,6 @@
 import sqlite3
 
+
 class DB:
     # Конструктор класса бд, создает таблицу, если не существует
     def __init__(self):
@@ -59,7 +60,7 @@ class DBHelper:
         for i in range(len(self.users_list)):
             if (self.users_list[i].get_id() == id):
                 exists = True
-        if (exists == False):
+        if (not exists):
             self.__db.insert_data(id, 0)
 
     # Получить СУЩЕСТВУЮЩЕГО юзера по id
@@ -70,26 +71,24 @@ class DBHelper:
                 return self.users_list[i]
 
     #############ИНСТРУКЦИЯ ПО ИСПОЛЬЗОВАНИЮ #################
-    #Основной класс для работы с бд - DBHelper
+    # Основной класс для работы с бд - DBHelper
+
+
 if __name__ == '__main__':
-    db = DB() #Создать экземпляр класса DB
-    helper = DBHelper(db) #Передать конструктору класса DBHelper
+    db = DB()  # Создать экземпляр класса DB
+    helper = DBHelper(db)  # Передать конструктору класса DBHelper
 
     # Добавлять элементы в таблицу : получаем таблицу из DBHelper'a вызовом геттера get_db
-    #Заносим информацию методом insert_data(id, баланс)
+    # Заносим информацию методом insert_data(id, баланс)
     helper.get_db().insert_data(1, 2000)
     helper.get_db().insert_data(2, 2321)
     helper.get_db().insert_data(4, 340)
 
-    #С помощью метода find_user_by_id класса DBHelper можно получить юзера по переданному id
+    # С помощью метода find_user_by_id класса DBHelper можно получить юзера по переданному id
     print("FIRST", helper.find_user_by_id(1).get_balance())
 
-    #Метод add_user_if_not_exists добавит в таблицу юзера с  балансом 0, если юзера с таким id нет
+    # Метод add_user_if_not_exists добавит в таблицу юзера с  балансом 0, если юзера с таким id нет
     helper.add_user_if_not_exists(3)
 
-    #Баланс любого юзера можно получить, вызвав у него метод get_balance
+    # Баланс любого юзера можно получить, вызвав у него метод get_balance
     print("THIRD", helper.find_user_by_id(3).get_balance())
-
-
-
-
